@@ -11,8 +11,8 @@ The __naoqi_driver__ module is in charge of providing some
 bridge capabilities between ROS and NAOqiOS.
 
 ## Dependencies
-To run, the driver requires the `naoqi_libqi`, `naoqi_libqicore` and `naoqi_bridge_msgs` packages. Those can be installed using apt-get (if they have been released for your ROS distro) or from source. Additionally, `pepper_meshes` and/or `nao_meshes` can be useful if you try to display the robot in RViz.
 
+To run, the driver requires the `naoqi_libqi`, `naoqi_libqicore` and `naoqi_bridge_msgs` packages. Those can be installed using apt-get (if they have been released for your ROS distro) or from source. Additionally, `pepper_meshes` and/or `nao_meshes` can be useful if you try to display the robot in RViz.
 
 ## How it works
 
@@ -24,32 +24,36 @@ Once connected, normal ROS communication is happening between
 your robot, running NAOqi OS, and your desktop, running ROS.
 
 ## Launch
+
 The driver can be launched using the following command:
+
 ```sh
+source <catkin_ws>/devel/setup.bash
 roslaunch naoqi_driver naoqi_driver.launch nao_ip:=<ip> nao_port:=<port> network_interface:=<interface> username:=<name> password:=<passwd>
-
-
-source path/setup.bash 
-
 ```
-Note that the username and password arguments are only required for robots running naoqi 2.9 or greater 
 
-Warning: naoqi_driver for melodic and greater have to be used for robots running naoqi 2.9 and greater
+Note that the username and password arguments are only required for robots running NAOqi 2.9 or greater
 
-## Check that the launchfil is running correctly
+Warning: `naoqi_driver` for melodic and greater have to be used for robots running NAOqi 2.9 and greater
 
-Check that naoqi_driver is connected with : 
+## Check that the node is running correctly
+
+Check that naoqi_driver is connected with :
+
 ```sh
 rosnode info /naoqi_driver
 ```
 
-Check that you can move the head by publishing on /joint_angles: 
+Check that you can move the head by publishing on `/joint_angles`:
+
 ```sh
 rostopic pub /joint_angles naoqi_bridge_msgs/JointAnglesWithSpeed "{header: {seq: 0, stamp: now, frame_id: ''}, joint_names: ['HeadYaw', 'HeadPitch'], joint_angles: [0.5,-0.1], speed: 0.1, relative: 0}"
 ```
-You can see the published message with rostopic echo /joint_angles
+
+You can see the published message with `rostopic echo /joint_angles`
 
 Check that you can move the robot by publishing on cmd_vel to make the robot move:
+
 ```sh
 rostopic pub /cmd_vel geometry_msgs/Twist "linear:
   x: 2.0
@@ -71,6 +75,7 @@ Melodic | [![Build Status](https://build.ros.org/job/Mbin_ub64__naoqi_driver__ub
 Kinetic | ![passing](https://raw.githubusercontent.com/jenkinsci/embeddable-build-status-plugin/7c7eedc7617851f07a1f09629c33fee11cff50ab/src/doc/flat_unconfigured.svg) | ![passing](https://raw.githubusercontent.com/jenkinsci/embeddable-build-status-plugin/7c7eedc7617851f07a1f09629c33fee11cff50ab/src/doc/flat_unconfigured.svg) | [![ros-kinetic-xenial](https://github.com/ros-naoqi/naoqi_driver/actions/workflows/kinetic_xenial.yml/badge.svg)](https://github.com/ros-naoqi/naoqi_driver/actions/workflows/kinetic_xenial.yml) |
 
 ## Further information
+
 For further information, you can consult the documentation (OUTDATED) [here](http://ros-naoqi.github.io/naoqi_driver/) or build it:
 
 ```sh
